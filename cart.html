@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="cart.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header id="main-header">
+        <div class="container">
+            <h1>Wagging Tails</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html#home">Home</a></li>
+                    <li><a href="index.html#services">Services</a></li>
+                    <li><a href="index.html#about">About Us</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Cart Content -->
+    <main>
+        <h2>Your Cart</h2>
+        <div id="service-details">
+            <img id="service-image" alt="Service Image">
+            <h3 id="service-name"></h3>
+            <p id="service-price"></p>
+            <p id="service-description"></p>
+            <button id="redirect-btn">Back to Service Details</button>
+        </div>
+    </main>
+
+    <script>
+        // Retrieve service details from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const serviceName = urlParams.get('service');
+        const servicePrice = urlParams.get('price');
+        const serviceImage = urlParams.get('image');
+        const serviceDescription = urlParams.get('description');
+
+        // Update the cart content with service details
+        document.getElementById('service-name').textContent = serviceName || 'Service not specified';
+        document.getElementById('service-price').textContent = servicePrice ? `Price: $${servicePrice}` : 'Price not specified';
+        document.getElementById('service-image').src = serviceImage || 'default-image.jpg'; // Default image if not found
+        document.getElementById('service-description').textContent = serviceDescription || 'Description not available';
+
+        // Redirect to the specific service section in index.html
+        document.getElementById('redirect-btn').addEventListener('click', () => {
+            const serviceMap = {
+                'Dog Walking': 'dog-walking',
+                'Pet Sitting': 'pet-sitting',
+                'Pet Grooming': 'pet-grooming',
+                'Pet Training': 'pet-training'
+            };
+            const sectionId = serviceMap[serviceName] || 'services';
+            window.location.href = `index.html#${sectionId}`;
+        });
+    </script>
+</body>
+</html>

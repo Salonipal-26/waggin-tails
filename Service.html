@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Details</title>
+    <link rel="stylesheet" href="Service.css">
+</head>
+
+<body>
+
+    <nav>
+        <div class="container">
+            <h1>Wagging Tails</h1>
+            <div class="nav">
+                <ul>
+                    <li><a href="index.html#home">Home</a></li>
+                    <li><a href="index.html#services">Services</a></li>
+                    <li id="saveAniesLi"><a href="index.html#SaveAnies">SaveAnies</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <h1>Our Services</h1>
+            <div class="optn">
+                <ul>
+                    <li><a href="#dog-walking">Dog Walking</a></li>
+                    <li><a href="#pet-sitting">Pet Sitting</a></li>
+                    <li><a href="#pet-grooming">Pet Grooming</a></li>
+                    <li><a href="#pet-training">Pet Training</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Service Sections -->
+    <section id="dog-walking" class="service-card">
+        <div class="content">
+            <h2>Dog Walking</h2>
+            <img src="images/dog-walking.jpg" alt="Dog Walking Service">
+            <p>Professional dog walking services to keep your pet healthy and happy.</p>
+            <button class="explore-btn"
+                onclick="redirectToCart('Dog Walking', 50, 'images/dog-walking.jpg', 'Professional dog walking services to keep your pet healthy and happy.')">Hire
+                Professional</button>
+        </div>
+    </section>
+
+    <section id="pet-sitting" class="service-card">
+        <div class="content">
+            <h2>Pet Sitting</h2>
+            <img src="images/pet-sitting.jpg" alt="Pet Sitting Service">
+            <p>Reliable pet sitting services to take care of your furry friends while you are away.</p>
+            <button class="explore-btn"
+                onclick="redirectToCart('Pet Sitting', 60, 'images/pet-sitting.jpg', 'Reliable pet sitting services to take care of your furry friends while you are away.')">Hire
+                Professional</button>
+        </div>
+    </section>
+
+    <section id="pet-grooming" class="service-card">
+        <div class="content">
+            <h2>Pet Grooming</h2>
+            <img src="images/pet-grooming.jpg" alt="Pet Grooming Service">
+            <p>Top-notch grooming services to keep your pets looking their best.</p>
+            <button class="explore-btn"
+                onclick="redirectToCart('Pet Grooming', 70, 'images/pet-grooming.jpg', 'Top-notch grooming services to keep your pets looking their best.')">Hire
+                Professional</button>
+        </div>
+    </section>
+
+    <section id="pet-training" class="service-card">
+        <div class="content">
+            <h2>Pet Training</h2>
+            <img src="images/pet-training.jpg" alt="Pet Training Service">
+            <p>Effective training programs to help your pets learn and grow.</p>
+            <button class="explore-btn"
+                onclick="redirectToCart('Pet Training', 80, 'images/pet-training.jpg', 'Effective training programs to help your pets learn and grow.')">Hire
+                Professional</button>
+        </div>
+    </section>
+
+    <!-- Smooth Scrolling and Redirect Script -->
+    <script>
+        // Smooth scrolling for anchor links only within the current page
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetElement = document.querySelector(this.getAttribute('href'));
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - document.querySelector('header').offsetHeight,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Redirect to cart with service details
+        function redirectToCart(serviceName, price, image, description) {
+            const url = new URL('cart.html', window.location.href);
+            url.searchParams.set('service', serviceName);
+            url.searchParams.set('price', price);
+            url.searchParams.set('image', image);
+            url.searchParams.set('description', description);
+            window.location.href = url;
+        }
+    </script>
+</body>
+
+</html>

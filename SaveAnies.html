@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animal Adoption Page</title>
+  <link rel="stylesheet" href="SaveAnies.css">
+</head>
+<body>
+  <header >
+    <div class="container">
+        <h1>Wagging Tails</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="index.html#about">About Us</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+  <div class="product-page">
+    <div class="board">
+     <h1 class="head1">Find your new Friend here ....</h1>
+     <h2 class="head2">An Anie is waiting for you</h2>
+    </div>
+    
+    
+
+    <!-- Filter Section -->
+    <div class="filter-section">
+      <input type="text" id="searchTerm" placeholder="Search by Animal Name..." oninput="filterAnimals()">
+      
+      <select id="animalTypeSelect" onchange="filterAnimals()">
+        <option value="">All Animal Types</option>
+        <option value="Dog">Dog</option>
+        <option value="Cat">Cat</option>
+        <option value="Horse">Horse</option>
+        <option value="Cow">Cow</option>
+        <option value="Parrot">Parrot</option>
+        <option value="Fish">Fish</option>
+        <!-- Add more animal types here -->
+      </select>
+
+      <select id="ageSelect" onchange="filterAnimals()">
+        <option value="">All Ages</option>
+        <option value="Puppy">Puppy</option>
+        <option value="Young">Young</option>
+        <option value="Adult">Adult</option>
+        <option value="Senior">Senior</option>
+      </select>
+
+      <select id="colorSelect" onchange="filterAnimals()">
+        <option value="">All Colors</option>
+        <option value="Brown">Brown</option>
+        <option value="Black">Black</option>
+        <option value="White">White</option>
+        <option value="Golden">Golden</option>
+        <option value="Gray">Gray</option>
+        <option value="Mixed">Mixed</option>
+      </select>
+    </div>
+
+    <!-- Animal List -->
+    <div class="product-list" id="animalList">
+      <!-- Animal items will be injected here dynamically -->
+    </div>
+
+    <button class="view-more-button" onclick="showMoreAnimals()">View More</button>
+  </div>
+
+  <script>
+    // Sample data for 50 animals (name, type, age, color, and images)
+    const animals = [
+      { id: 1, name: "Max", type: "Dog", age: "Puppy", color: "Brown", image: "max.jpg" },
+      { id: 2, name: "Bella", type: "Dog", age: "Young", color: "Black", image: "bella.jpg" },
+      { id: 3, name: "Charlie", type: "Cat", age: "Adult", color: "White", image: "charlie.jpg" },
+      { id: 4, name: "Lucy", type: "Horse", age: "Senior", color: "Golden", image: "lucy.jpg" },
+      { id: 5, name: "Rocky", type: "Cow", age: "Young", color: "Brown", image: "rocky.jpg" },
+      { id: 6, name: "Luna", type: "Parrot", age: "Puppy", color: "Gray", image: "luna.jpg" },
+      { id: 7, name: "Cooper", type: "Fish", age: "Adult", color: "Black", image: "cooper.jpg" },
+      { id: 8, name: "Daisy", type: "Dog", age: "Senior", color: "Golden", image: "daisy.jpg" },
+      { id: 9, name: "Bailey", type: "Cat", age: "Young", color: "Mixed", image: "bailey.jpg" },
+      { id: 10, name: "Sadie", type: "Horse", age: "Adult", color: "White", image: "sadie.jpg" },
+      { id: 11, name: "Oscar", type: "Cow", age: "Puppy", color: "Golden", image: "oscar.jpg" },
+      { id: 12, name: "Ruby", type: "Dog", age: "Young", color: "Brown", image: "ruby.jpg" },
+      { id: 13, name: "Maximus", type: "Parrot", age: "Senior", color: "Gray", image: "maximus.jpg" },
+      { id: 14, name: "Bella", type: "Fish", age: "Adult", color: "White", image: "bella2.jpg" },
+      { id: 15, name: "Charlie", type: "Dog", age: "Young", color: "Golden", image: "charlie2.jpg" },
+      { id: 16, name: "Milo", type: "Cat", age: "Puppy", color: "Brown", image: "milo.jpg" },
+      { id: 17, name: "Rocky", type: "Horse", age: "Senior", color: "Black", image: "rocky2.jpg" },
+      { id: 18, name: "Lily", type: "Cow", age: "Adult", color: "White", image: "lily.jpg" },
+      { id: 19, name: "Finn", type: "Fish", age: "Young", color: "Golden", image: "finn.jpg" },
+      { id: 20, name: "Leo", type: "Parrot", age: "Puppy", color: "Red", image: "leo.jpg" },
+      { id: 21, name: "Rex", type: "Dog", age: "Adult", color: "Black", image: "rex.jpg" },
+      { id: 22, name: "Oscar", type: "Cat", age: "Senior", color: "Golden", image: "oscar2.jpg" },
+      { id: 23, name: "Mia", type: "Horse", age: "Puppy", color: "Gray", image: "mia.jpg" },
+      { id: 24, name: "Coco", type: "Cow", age: "Young", color: "Mixed", image: "coco.jpg" },
+      { id: 25, name: "Benny", type: "Fish", age: "Adult", color: "Black", image: "benny.jpg" },
+      { id: 26, name: "Ginger", type: "Dog", age: "Puppy", color: "Brown", image: "ginger.jpg" },
+      { id: 27, name: "Toby", type: "Parrot", age: "Adult", color: "Green", image: "toby.jpg" },
+      { id: 28, name: "Ella", type: "Cat", age: "Young", color: "White", image: "ella.jpg" },
+      { id: 29, name: "Sasha", type: "Horse", age: "Senior", color: "Golden", image: "sasha.jpg" },
+      { id: 30, name: "Kiki", type: "Cow", age: "Young", color: "Black", image: "kiki.jpg" },
+      { id: 31, name: "Loki", type: "Fish", age: "Senior", color: "White", image: "loki.jpg" },
+      { id: 32, name: "Jax", type: "Dog", age: "Adult", color: "Gray", image: "jax.jpg" },
+      { id: 33, name: "Nina", type: "Parrot", age: "Young", color: "Red", image: "nina.jpg" },
+      { id: 34, name: "Jake", type: "Horse", age: "Puppy", color: "Brown", image: "jake.jpg" },
+      { id: 35, name: "Marley", type: "Cow", age: "Adult", color: "Golden", image: "marley.jpg" },
+      { id: 36, name: "Zoey", type: "Fish", age: "Young", color: "Green", image: "zoey.jpg" },
+      { id: 37, name: "Buddy", type: "Dog", age: "Puppy", color: "Mixed", image: "buddy.jpg" },
+      { id: 38, name: "Chester", type: "Cat", age: "Senior", color: "Golden", image: "chester.jpg" },
+      { id: 39, name: "Zoe", type: "Horse", age: "Young", color: "Black", image: "zoe.jpg" },
+      { id: 40, name: "Maggie", type: "Cow", age: "Puppy", color: "Mixed", image: "maggie.jpg" },
+      { id: 41, name: "Winston", type: "Fish", age: "Senior", color: "Gray", image: "winston.jpg" },
+      { id: 42, name: "Rocky", type: "Dog", age: "Senior", color: "Black", image: "rocky3.jpg" },
+      { id: 43, name: "Milo", type: "Cat", age: "Young", color: "Golden", image: "milo2.jpg" },
+      { id: 44, name: "Holly", type: "Parrot", age: "Adult", color: "Yellow", image: "holly.jpg" },
+      { id: 45, name: "Jasmine", type: "Horse", age: "Adult", color: "White", image: "jasmine.jpg" },
+      { id: 46, name: "Charlie", type: "Cow", age: "Young", color: "Brown", image: "charlie3.jpg" },
+      { id: 47, name: "Clyde", type: "Fish", age: "Adult", color: "Golden", image: "clyde.jpg" },
+      { id: 48, name: "Duke", type: "Dog", age: "Puppy", color: "Golden", image: "duke.jpg" },
+      { id: 49, name: "Daisy", type: "Cat", age: "Senior", color: "White", image: "daisy2.jpg" },
+      { id: 50, name: "Teddy", type: "Horse", age: "Puppy", color: "Brown", image: "teddy.jpg" }
+    ];
+
+    // Function to display animals on the page
+    function displayAnimals(filteredAnimals) {
+      const animalList = document.getElementById('animalList');
+      animalList.innerHTML = ''; // Clear existing animals
+
+      filteredAnimals.forEach(animal => {
+        const animalCard = document.createElement('div');
+        animalCard.classList.add('product-card');
+        animalCard.innerHTML = `
+          <img src="${animal.image}" alt="${animal.name}">
+          <h3>${animal.name}</h3>
+          <p>Age: ${animal.age}</p>
+          <p>Color: ${animal.color}</p>
+          <button class="adopt-button">Adopt</button>
+        `;
+        animalList.appendChild(animalCard);
+      });
+    }
+
+    // Function to filter animals based on user selection
+    function filterAnimals() {
+      const searchTerm = document.getElementById('searchTerm').value.toLowerCase();
+      const typeSelect = document.getElementById('animalTypeSelect').value;
+      const ageSelect = document.getElementById('ageSelect').value;
+      const colorSelect = document.getElementById('colorSelect').value;
+
+      const filteredAnimals = animals.filter(animal => {
+        return (animal.name.toLowerCase().includes(searchTerm) ||
+                animal.type.toLowerCase().includes(searchTerm)) &&
+               (!typeSelect || animal.type === typeSelect) &&
+               (!ageSelect || animal.age === ageSelect) &&
+               (!colorSelect || animal.color === colorSelect);
+      });
+
+      displayAnimals(filteredAnimals);
+    }
+
+    // Display all animals initially
+    displayAnimals(animals);
+
+
+     // Retrieve the selected animal from localStorage
+     const selectedAnimal = JSON.parse(localStorage.getItem('selectedAnimal'));
+
+// Display the animal details on the page
+if (selectedAnimal) {
+  const animalDetailsDiv = document.getElementById('animalDetails');
+  animalDetailsDiv.innerHTML = `
+    <img src="${selectedAnimal.image}" alt="${selectedAnimal.name}">
+    <h3>${selectedAnimal.name}</h3>
+    <p>Age: ${selectedAnimal.age}</p>
+    <p>Color: ${selectedAnimal.color}</p>
+    <p>Type: ${selectedAnimal.type}</p>
+  `;
+} else {
+  alert("No animal selected.");
+}
+  </script>
+</body>
+</html>
